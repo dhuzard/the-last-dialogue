@@ -6,7 +6,17 @@ from typing import Dict, Any, List
 
 from graph import app as graph_app
 
+from fastapi.middleware.cors import CORSMiddleware
+
 app = FastAPI(title="The Last Dialogue API")
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["http://localhost:3000"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 # Store for active sessions (in memory for scaffolding, use Redis/DB in prod)
 # Actually LangGraph MemorySaver handles the threads if we use the same checkpointer instance.
