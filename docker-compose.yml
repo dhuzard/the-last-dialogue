@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "8080:8080"
+    environment:
+      - PORT=8080
+      # Add API keys here or in a .env file
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+    volumes:
+      - ./backend:/app:ro # Mount code for easier inspection (though Dockerfile is static)
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "3000:3000"
+    environment:
+      - NEXT_PUBLIC_API_URL=http://localhost:8080
+    depends_on:
+      - backend
